@@ -10,7 +10,7 @@ import Foundation
 
 class Service: NSObject {
     static let shared = Service()
-    
+    //MARK: -  NSURLSession DataTask - Get Method
     func fetchPlanets(completion: @escaping (PlanetModel?, Error?) -> ()) {
         let urlString = "https://swapi.co/api/planets"
         guard let url = URL(string: urlString) else { return }
@@ -36,7 +36,7 @@ class Service: NSObject {
             }.resume()
     }
     
-    //MARK: - Generic Method for
+    //MARK: - Generic Method for NSURLSession DataTask - Get Method
      func fetchGenericData<T: Decodable>(urlString: String, completion: @escaping (T) -> ()) {
 
         let url = URL(string: urlString)

@@ -13,7 +13,7 @@ class PlanetViewController: UITableViewController {
     var planetsArray = [Result]()
     
     let cellId = "cellId"
-
+    //MARK:-  LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,11 +29,10 @@ class PlanetViewController: UITableViewController {
         }
     }
     
-
+    //MARK:- Webservise Consumption
     fileprivate func fetchData() {
     
         Service.shared.fetchGenericData(urlString: "https://swapi.co/api/planets") { (planetModel:PlanetModel) in
-            
             if let result = planetModel.results {
             DBManager.sharedInstance.savePlanetData(planets: result)
             }
@@ -43,13 +42,13 @@ class PlanetViewController: UITableViewController {
         }
         
     }
-    
+    //MARK:- Reload CoreData in Tableview
     func refreshView(){
-        
         planetsArray = DBManager.sharedInstance.getPlanetData()
         self.tableView.reloadData()
     }
     
+    //MARK:- Tableview Delegate & DataSource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return planetsArray.count
         
@@ -68,6 +67,8 @@ class PlanetViewController: UITableViewController {
         return UITableViewCell()
         
     }
+    
+//MARK:- Tableview setup
     fileprivate func setupTableView() {
         tableView.register(PlanetCell.self, forCellReuseIdentifier: cellId)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
@@ -78,7 +79,7 @@ class PlanetViewController: UITableViewController {
         tableView.tableFooterView = UIView()
     }
     
-
+//MARK:- Programatically NavigationBar Setup
     fileprivate func setupNavBar() {
         navigationItem.title = "Planets"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -89,12 +90,13 @@ class PlanetViewController: UITableViewController {
     }
 
 }
+//MARK:-CustomeNavigation Controller
 class CustomNavigationController: UINavigationController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 }
-
+//MARK:-Extension for Color used in App
 extension UIColor {
     static let mainTextBlue = UIColor.rgb(r: 7, g: 71, b: 89)
     static let highlightColor = UIColor.rgb(r: 50, g: 199, b: 242)
